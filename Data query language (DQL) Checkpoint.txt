@@ -1,0 +1,76 @@
+1.SELECT * FROM Customer;
+
+2.SELECT product_name, category FROM Product WHERE Price BETWEEN 5000 AND 10000;
+
+3.SELECT * FROM Product ORDER BY Price DESC;
+
+4.SELECT 
+  Product_id,
+  COUNT(*) AS total_orders,
+  AVG(total_amount) AS average_amount,
+  MAX(total_amount) AS max_amount,
+  MIN(total_amount) AS min_amount
+FROM
+  Orders
+GROUP BY
+  Product_id;
+SELECT
+  Product_id,
+  COUNT(*) AS number_of_orders
+FROM
+  Orders
+GROUP BY
+  Product_id;
+
+5.SELECT
+  Customer_id
+FROM
+  Orders
+GROUP BY
+  Customer_id
+HAVING
+  COUNT(*) > 2;
+
+6.SELECT
+  DATE_FORMAT(OrderDate, '%Y-%m') AS YearMonth,
+  COUNT(*) AS NumberOfOrders
+FROM
+  Orders
+WHERE
+  YEAR(OrderDate) = 2020
+GROUP BY
+  YearMonth;
+
+7.SELECT
+  Product.product_name,
+  Customer.customer_Name,
+  Orders.OrderDate
+FROM
+  Orders
+JOIN
+  Product ON Orders.#Product_id = Product.Product_id
+JOIN
+  Customer ON Orders.#Customer_id = Customer.Customer_id;
+
+8.SELECT
+  Product.product_name,
+  Customer.customer_Name,
+  Orders.OrderDate
+FROM
+  Orders
+JOIN
+  Product ON Orders.#Product_id = Product.Product_id
+JOIN
+  Customer ON Orders.#Customer_id = Customer.Customer_id
+WHERE
+  Orders.OrderDate >= DATE_SUB(NOW(), INTERVAL 3 MONTH)
+  AND Orders.OrderDate < DATE_SUB(NOW(), INTERVAL 2 MONTH);
+
+9.SELECT
+  Customer.Customer_id
+FROM
+  Customer
+LEFT JOIN
+  Orders ON Customer.Customer_id = Orders.#Customer_id
+WHERE
+  Orders.#Customer_id IS NULL;
